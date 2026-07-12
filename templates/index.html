@@ -1,0 +1,153 @@
+
+{% extends 'layout.html' %}
+
+{% block title %}
+Home - Tralerbliss
+{% endblock %}
+
+{% block content %}
+
+<div class="hero-section">
+    <h1>Welcome to TrailBliss⛰️</h1>
+    <p>Where Fitness is Achieved Through Joyful Treks....</p>
+</div>
+
+<div class="login-options">
+
+    <a href="{{ url_for('main.trekker_login') }}" class="login-card trekker">
+        <div class="icon">🥾</div>
+        <h2>Trekker</h2>
+        <span>Login / Register</span>
+    </a>
+
+    <a href="{{ url_for('main.staff_login') }}" class="login-card staff">
+        <div class="icon">🧭</div>
+        <h2>Staff</h2>
+        <span>Login / Register</span>
+    </a>
+
+    <a href="{{ url_for('main.admin_login') }}" class="login-card admin">
+        <div class="icon">⚙️</div>
+        <h2>Admin</h2>
+        <span>Login</span>
+    </a>
+
+</div>
+
+{% endblock %}
+
+
+
+{% block style %}
+<style>
+
+body{
+    margin:0;
+    min-height:100vh;
+    font-family:Arial, Helvetica, sans-serif;
+    background:linear-gradient(135deg,#F5F9FF,#FFF8F2);
+    background-attachment:fixed;
+}
+
+
+.hero-section{
+    text-align:center;
+    padding:80px 20px 60px;
+}
+
+.hero-section h1{
+    font-size:56px;
+    font-weight:700;
+    color:#234E70;
+    margin-bottom:12px;
+}
+
+.hero-section p{
+    font-size:22px;
+    color:#687784;
+    max-width:700px;
+    margin:auto;
+}
+
+.login-options{
+    display:flex;
+    justify-content:center;
+    gap:35px;
+    flex-wrap:wrap;
+    padding:20px 40px 70px;
+}
+
+.login-card{
+    width:290px;
+    height:230px;
+    background:#fff;
+    border-radius:18px;
+    text-decoration:none;
+    color:#333;
+    overflow:hidden;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+    transition:.35s ease;
+}
+
+.login-card:hover{
+    transform:translateY(-10px) scale(1.03);
+    box-shadow:0 20px 40px rgba(0,0,0,.15);
+}
+
+.icon{
+    width:80px;
+    height:80px;
+    border-radius:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:42px;
+    margin-bottom:18px;
+}
+
+.login-card h2{
+    margin:0;
+    font-size:30px;
+    font-weight:700;
+}
+
+.login-card span{
+    margin-top:8px;
+    color:#777;
+    font-size:17px;
+}
+
+.trekker{
+    border-top:8px solid #6b2e7d;
+}
+
+.trekker .icon{
+    background:#f3eaf7;
+}
+
+.staff{
+    border-top:8px solid #1976D2;
+}
+
+.staff .icon{
+    background:#EAF2FF;
+}
+
+/* Admin */
+
+.admin{
+    border-top:8px solid #EF6C00;
+}
+
+.admin .icon{
+    background:#FFF3E6;
+}
+
+</style>
+{% endblock %}

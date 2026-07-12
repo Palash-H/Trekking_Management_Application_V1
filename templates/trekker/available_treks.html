@@ -1,0 +1,114 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Available Treks
+{% endblock %}
+
+{% block content %}
+
+<h1 class="wel">Available Treks</h1>
+
+<div class="heading">
+    <h2 class="text-muted">Treks</h2>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Trek Name</th>
+            <th>Location</th>
+            <th>Difficulty</th>
+            <th>Duration</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Slots Left</th>
+            <th>Actions</th>        
+        </tr>
+    </thead>
+
+    <tbody>
+
+        {% for trek in treks %}
+
+        <tr>
+            <td>{{ trek.trek_name }}</td>
+            <td>{{ trek.location }}</td>
+            <td>{{ trek.difficulty }}</td>
+            <td>{{ trek.duration }} Days</td>
+            <td>{{ trek.start_date }}</td>
+            <td>{{ trek.end_date }}</td>
+
+            <td>
+                {{ trek.available_slots - booked_slots[trek.id] }}
+                / {{ trek.available_slots }}
+            </td>
+            
+            <td>
+            
+                {% if booked_slots[trek.id] >= trek.available_slots %}
+            
+                    <button class="btn btn-secondary" disabled>
+                        Fully Booked
+                    </button>
+            
+                {% else %}
+            
+                    <a class="btn btn-outline-primary"
+                       href="{{ url_for('main.book_trek', id=trek.id) }}">
+                        🥾 Book
+                    </a>
+            
+                {% endif %}
+            
+            </td>
+        </tr>
+
+        {% endfor %}
+
+    </tbody>
+</table>
+
+{% endblock %}
+
+{% block style %}
+
+<style>
+
+html,
+body{
+    height:100%;
+    margin:0;
+    background:linear-gradient(135deg,#EAF2FF,#FFF1E6);
+    background-repeat:no-repeat;
+    background-attachment:fixed;
+    background-size:cover;
+}
+.wel{
+    margin-top: 30px;
+}
+.heading{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.table{
+    background:white;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+}
+
+h1,h2{
+    text-align:center;
+    color:#2E5E3B;
+}
+
+.btn{
+    margin-right:5px;
+}
+
+</style>
+
+{% endblock %}

@@ -1,0 +1,171 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+My Bookings
+{% endblock %}
+
+{% block content %}
+
+<h1 class="wel">My Bookings</h1>
+
+<div class="heading">
+    <h2 class="text-muted">Booked Treks</h2>
+</div>
+
+{% if bookings %}
+
+<table class="table align-middle">
+
+    <thead>
+        <tr>
+            <th>Trek</th>
+            <th>Location</th>
+            <th>Difficulty</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Booked On</th>
+            <th>Booking Status</th>
+            <th>Trek Status</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        {% for booking in bookings %}
+
+        <tr>
+
+            <td>{{ booking.trek.trek_name }}</td>
+
+            <td>{{ booking.trek.location }}</td>
+
+            <td>{{ booking.trek.difficulty }}</td>
+
+            <td>{{ booking.trek.start_date }}</td>
+
+            <td>{{ booking.trek.end_date }}</td>
+
+            <td>{{ booking.booking_slot.strftime('%d-%m-%Y') }}</td>
+
+            <td>
+                {% if booking.status == "Booked" %}
+                    <span class="badge bg-primary">
+                        {{ booking.status }}
+                    </span>
+
+                {% elif booking.status == "Completed" %}
+                    <span class="badge bg-success">
+                        {{ booking.status }}
+                    </span>
+
+                {% elif booking.status == "Cancelled" %}
+                    <span class="badge bg-danger">
+                        {{ booking.status }}
+                    </span>
+
+                {% else %}
+                    <span class="badge bg-secondary">
+                        {{ booking.status }}
+                    </span>
+                {% endif %}
+            </td>
+
+            <td>
+
+                {% if booking.trek.status == "Open" %}
+                    <span class="badge bg-success">
+                        Open
+                    </span>
+
+                {% elif booking.trek.status == "Closed" %}
+                    <span class="badge bg-warning text-dark">
+                        Closed
+                    </span>
+
+                {% elif booking.trek.status == "Completed" %}
+                    <span class="badge bg-dark">
+                        Completed
+                    </span>
+
+                {% elif booking.trek.status == "Pending" %}
+                    <span class="badge bg-secondary">
+                        Pending
+                    </span>
+
+                {% else %}
+                    <span class="badge bg-info">
+                        {{ booking.trek.status }}
+                    </span>
+
+                {% endif %}
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </tbody>
+
+</table>
+
+{% else %}
+
+<div class="alert alert-info text-center mt-4">
+    You haven't booked any treks yet.
+</div>
+
+{% endif %}
+
+{% endblock %}
+
+{% block style %}
+
+<style>
+
+html,
+body{
+    height:100%;
+    margin:0;
+    background:linear-gradient(135deg,#EAF2FF,#FFF1E6);
+    background-repeat:no-repeat;
+    background-attachment:fixed;
+    background-size:cover;
+}
+
+.wel{
+    margin-top:30px;
+    text-align:center;
+    color:#2E5E3B;
+}
+
+.heading{
+    display:flex;
+    justify-content:center;
+    margin-bottom:25px;
+}
+
+.table{
+    background:white;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+}
+
+th{
+    background:#2E5E3B;
+    color:white;
+}
+
+td{
+    vertical-align:middle;
+}
+
+.badge{
+    font-size:0.9rem;
+    padding:8px 12px;
+}
+
+</style>
+
+{% endblock %}

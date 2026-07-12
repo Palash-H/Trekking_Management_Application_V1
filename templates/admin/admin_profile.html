@@ -1,0 +1,54 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <h1>Profile
+        <small class="text-muted">@Admin</small>
+    </h1>    
+
+    <h3>Edit Profile</h3>
+
+    <form method = 'post'>
+        <label for="name" class="form-label">Name:
+            <input type="text" name="name" id="name" class="form-control" required value="{{admin.name}}">
+        </label>
+        <label for="email" class="form-label">Email:
+            <input type="text" name="email" id="email" class="form-control" required value="{{admin.email}}">
+        </label>
+        <label for="cpassword" class="form-label">Current Password:
+            <input type="cpassword" name="cpassword" id="cpassword" class="form-control" required>
+        </label>
+        <label for="password" class="form-label">Change Password:
+            <input type="password" name="password" id="password" class="form-control" required>
+        </label>
+        <input type="submit" value="Save Changes" class="btn btn-success"><br>
+    <a href="{{url_for('main.logout')}}" class="btn btn-outline-danger align-items-center">Logout</a>
+    </form>
+    
+{% endblock %}
+
+{% block style %}
+<style>
+    html, body {
+    height: 100%;       
+    margin: 0;          
+    background: linear-gradient(135deg, #EAF2FF, #FFF1E6);
+    background-repeat: no-repeat;
+    background-attachment: fixed;  
+    background-size: cover;      
+ }
+
+    form {
+        display:flex;
+        flex-direction: column;
+        align-items: centre;
+        width: 30%;
+        margin: 0  auto;
+       
+    }
+
+    h1,h2,h3 {
+       
+        text-align: center;
+    }
+</style>
+{% endblock %}

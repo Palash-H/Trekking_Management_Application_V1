@@ -1,0 +1,96 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Registered Trekkers
+{% endblock %}
+
+{% block content %}
+
+<h1 class="wel">Registered Trekkers</h1>
+
+
+<table class="table table-hover">
+
+    <thead>
+
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+
+    </thead>
+
+    <tbody>
+
+        {% for trekker in trekkers %}
+
+        <tr>
+
+            <td>{{ trekker.id }}</td>
+
+            <td>{{ trekker.name }}</td>
+
+            <td>{{ trekker.email }}</td>
+
+            <td>{{ trekker.phone }}</td>
+
+            <td>
+
+                {% if trekker.is_active %}
+
+                    <span class="badge bg-success">
+                        Active
+                    </span>
+
+                {% else %}
+
+                    <span class="badge bg-danger">
+                        Blacklisted
+                    </span>
+
+                {% endif %}
+
+            </td>
+
+            <td>
+
+                {% if trekker.is_active %}
+
+                <a href="{{ url_for('main.blacklist_trekker', id=trekker.id) }}"
+                   class="btn btn-danger btn-sm"
+                   onclick="return confirm('Are you sure you want to blacklist this trekker?')">
+
+                    <i class="fas fa-ban"></i>
+
+                    Blacklist
+
+                </a>
+
+                {% else %}
+
+                <a href="{{ url_for('main.activate_trekker', id=trekker.id) }}"
+                   class="btn btn-success btn-sm">
+
+                    <i class="fas fa-check"></i>
+
+                    Activate
+
+                </a>
+
+                {% endif %}
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </tbody>
+
+</table>
+
+{% endblock %}

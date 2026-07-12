@@ -1,0 +1,228 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Manage Staff | TrailBliss
+{% endblock %}
+
+{% block content %}
+
+<div class="staff-page">
+
+    <div class="page-header">
+        <div>
+            <h1>🥾 Staff Management</h1>
+            <p>Manage trekking guides and approve new registrations.</p>
+        </div>
+    </div>
+
+    <div class="table-card">
+
+        <table class="table align-middle mb-0">
+
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Guide Name</th>
+                    <th>Email</th>
+                    <th>Contact</th>
+                    <th>Status</th>
+                    <th width="320">Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for staff in staffs %}
+
+                <tr>
+
+                    <td>{{ staff.id }}</td>
+
+                    <td>
+                        <strong>{{ staff.name }}</strong>
+                    </td>
+
+                    <td>{{ staff.email }}</td>
+
+                    <td>{{ staff.contact }}</td>
+
+                    <td>
+
+                        {% if staff.approval_status=="Approved" %}
+                            <span class="badge approved">Approved</span>
+
+                        {% elif staff.approval_status=="Pending" %}
+                            <span class="badge pending">Pending</span>
+
+                        {% elif staff.approval_status=="Rejected" %}
+                            <span class="badge rejected">Rejected</span>
+
+                        {% else %}
+                            <span class="badge blacklisted">Blacklisted</span>
+                        {% endif %}
+
+                    </td>
+
+                    <td>
+                        <a href="{{url_for('main.approve_staff',id=staff.id)}}" class="btn-action btn-approve">
+                            ✅ Approve
+                        </a>
+
+                        <a href="{{url_for('main.reject_staff',id=staff.id)}}" class="btn-action btn-reject">
+                            ❌ Reject
+                        </a>
+
+                        <a href="{{url_for('main.blacklist_staff',id=staff.id)}}" class="btn-action btn-blacklist">
+                            🚫 Blacklist
+                        </a>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block style %}
+
+<style>
+
+body{
+    background:linear-gradient(135deg,#F5F9FF,#FFF8F2);
+    min-height:100vh;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+.staff-page{
+    max-width:1300px;
+    margin:45px auto;
+    padding:20px;
+}
+
+.page-header{
+    margin-bottom:30px;
+}
+
+.page-header h1{
+    color:#234E70;
+    font-size:38px;
+    font-weight:700;
+    margin-bottom:8px;
+}
+
+.page-header p{
+    color:#6B7280;
+    font-size:17px;
+}
+
+.table-card{
+    background:#fff;
+    border-radius:22px;
+    overflow:hidden;
+    box-shadow:0 12px 30px rgba(35,78,112,.08);
+}
+
+.table{
+    margin:0;
+}
+
+.table thead{
+    background:#234E70;
+}
+
+.table th{
+    color:rgb(4, 0, 0);
+    text-align:center;
+    padding:18px;
+    font-size:15px;
+    border:none;
+}
+
+.table td{
+    text-align:center;
+    padding:18px;
+    vertical-align:middle;
+    border-color:#EEF3F8;
+}
+
+.table tbody tr{
+    transition:.25s;
+}
+
+.table tbody tr:hover{
+    background:#F7FAFD;
+}
+
+.badge{
+    padding:8px 16px;
+    border-radius:30px;
+    font-size:13px;
+    font-weight:600;
+}
+
+.approved{
+    background:#EAF3FF;
+    color:#2C6FD6;
+}
+
+.pending{
+    background:#FFF5D8;
+    color:#C79200;
+}
+
+.rejected{
+    background:#FFE7E7;
+    color:#D9534F;
+}
+
+.blacklisted{
+    background:#E8EDF3;
+    color:#52616B;
+}
+
+.btn-action{
+    display:inline-block;
+    text-decoration:none;
+    color:white;
+    padding:8px 14px;
+    border-radius:10px;
+    font-size:13px;
+    font-weight:600;
+    margin:3px;
+    transition:.25s;
+}
+
+.btn-action:hover{
+    color:white;
+    transform:translateY(-2px);
+    box-shadow:0 6px 15px rgba(0,0,0,.12);
+}
+
+.btn-view{
+    background:#7AA7E8;
+}
+
+.btn-approve{
+    background:#4A90E2;
+}
+
+.btn-reject{
+    background:#E87C7C;
+}
+
+.btn-blacklist{
+    background:#7D8CA3;
+}
+
+</style>
+
+{% endblock %}

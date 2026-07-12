@@ -1,0 +1,127 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Registered Users
+{% endblock %}
+
+{% block content %}
+
+<h1 class="wel">Registered Users</h1>
+
+<div class="heading">
+    <h2 class="text-muted">{{ trek.trek_name }} - Registered Trekkers</h2>
+</div>
+
+{% if bookings %}
+
+<table class="table">
+
+    <thead>
+        <tr>
+            <th>User ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Booking Date</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+    {% for booking in bookings %}
+
+    <tr>
+
+        <td>{{ booking.trekker.id }}</td>
+
+        <td>{{ booking.trekker.name }}</td>
+
+        <td>{{ booking.trekker.email }}</td>
+
+        <td>{{ booking.trekker.phone }}</td>
+
+        <td>{{ booking.booking_slot.strftime('%d-%m-%Y %H:%M') }}</td>
+
+        <td>{{ booking.status }}</td>
+
+        <td>
+            <a href="{{ url_for('main.staff_remove_booking', booking_id=booking.id) }}"
+               class="btn btn-danger btn-sm"
+               onclick="return confirm('Remove this user from this trek?')">
+                Remove
+            </a>
+        </td>
+
+    </tr>
+
+    {% endfor %}
+
+    </tbody>
+
+</table>
+
+{% else %}
+
+<div class="alert alert-info text-center">
+    No users have registered for this trek yet.
+</div>
+
+{% endif %}
+
+<div class="text-center mt-4">
+    <a href="{{ url_for('main.staff_assigned_treks') }}"
+       class="btn btn-secondary">
+        Back
+    </a>
+</div>
+
+{% endblock %}
+
+{% block style %}
+
+<style>
+
+html,
+body{
+    height:100%;
+    margin:0;
+    background:linear-gradient(135deg,#EAF2FF,#FFF1E6);
+    background-repeat:no-repeat;
+    background-attachment:fixed;
+    background-size:cover;
+}
+
+.wel{
+    margin-top:30px;
+}
+
+.heading{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.table{
+    background:white;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+}
+
+h1,
+h2{
+    text-align:center;
+    color:#2E5E3B;
+}
+
+.alert{
+    max-width:700px;
+    margin:40px auto;
+}
+
+</style>
+
+{% endblock %}

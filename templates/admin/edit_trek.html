@@ -1,0 +1,179 @@
+{% extends 'layout.html' %}
+
+{% block title %}Edit Trek{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <h2 class="text-center mb-4">Edit Trek</h2>
+
+    <form action="{{ url_for('main.edit_trek_post', id=trek.id) }}" method="POST">
+
+        <table class="table">
+
+            <tr>
+                <th>Trek Name</th>
+                <td>
+                    <input type="text" name="trek_name"
+                           class="form-control"
+                           value="{{ trek.trek_name }}" required>
+                </td>
+            </tr>
+
+            <tr>
+                <th>Location</th>
+                <td>
+                    <input type="text" name="location"
+                           class="form-control"
+                           value="{{ trek.location }}" required>
+                </td>
+            </tr>
+
+            <tr>
+                <th>Difficulty</th>
+                <td>
+                    <select name="difficulty" class="form-select">
+                        <option value="Easy" {% if trek.difficulty=="Easy" %}selected{% endif %}>Easy</option>
+                        <option value="Moderate" {% if trek.difficulty=="Moderate" %}selected{% endif %}>Moderate</option>
+                        <option value="Hard" {% if trek.difficulty=="Hard" %}selected{% endif %}>Hard</option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <th>Duration (Days)</th>
+                <td>
+                    <input type="number" name="duration"
+                           class="form-control"
+                           value="{{ trek.duration }}" required>
+                </td>
+            </tr>
+
+            <tr>
+                <th>Available Slots</th>
+                <td>
+                    <input type="number" name="available_slots"
+                           class="form-control"
+                           value="{{ trek.available_slots }}" required>
+                </td>
+            </tr>
+
+            <tr>
+                <th>Assigned Staff</th>
+                <td>
+                    <select name="staff_id" class="form-select">
+                        {% for s in staff %}
+                        <option value="{{ s.id }}"
+                            {% if s.id == trek.staff_id %}selected{% endif %}>
+                            {{ s.name }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <th>Start Date</th>
+                <td>
+                    <input type="date" name="start_date"
+                           class="form-control"
+                           value="{{ trek.start_date }}" required>
+                </td>
+            </tr>
+
+            <tr>
+                <th>End Date</th>
+                <td>
+                    <input type="date" name="end_date"
+                           class="form-control"
+                           value="{{ trek.end_date }}" required>
+                </td>
+            </tr>
+
+            <tr>
+                <th>Description</th>
+                <td>
+                    <textarea name="description"
+                              class="form-control"
+                              rows="5">{{ trek.description }}</textarea>
+                </td>
+            </tr>
+
+        </table>
+
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-success">Update Trek</button>
+            <a href="{{ url_for('main.admin_trek_list') }}" class="btn btn-secondary">Cancel</a>
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}
+
+<style>
+
+    .container{
+        max-width:900px;
+    }
+    
+    h2{
+        color:#2d6a4f;
+        font-weight:bold;
+    }
+    
+    table{
+        background:#ffffff;
+        border-radius:15px;
+        overflow:hidden;
+        box-shadow:0 8px 20px rgba(0,0,0,0.15);
+    }
+    
+    table th{
+        width:220px;
+        background:#e8f5e9;
+        color:#2d6a4f;
+        vertical-align:middle;
+        font-weight:600;
+    }
+    
+    table td{
+        vertical-align:middle;
+    }
+    
+    .form-control,
+    .form-select{
+        border-radius:10px;
+        border:1px solid #ced4da;
+    }
+    
+    .form-control:focus,
+    .form-select:focus{
+        border-color:#2d6a4f;
+        box-shadow:0 0 8px rgba(45,106,79,.25);
+    }
+    
+    textarea{
+        resize:none;
+    }
+    
+    .btn-success{
+        background:#2d6a4f;
+        border:none;
+        border-radius:10px;
+        padding:10px 25px;
+    }
+    
+    .btn-success:hover{
+        background:#1b4332;
+    }
+    
+    .btn-secondary{
+        border-radius:10px;
+        padding:10px 25px;
+        margin-left:10px;
+    }
+    
+    </style>

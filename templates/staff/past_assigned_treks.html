@@ -1,0 +1,173 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Past Assigned Treks
+{% endblock %}
+
+{% block content %}
+
+<h2 class="page-title">Past Assigned Treks</h2>
+
+{% if past_assigned_treks %}
+
+<div class="table-container">
+
+    <table class="table table-hover align-middle">
+
+        <thead>
+            <tr>
+                <th>Trek ID</th>
+                <th>Trek Name</th>
+                <th>Location</th>
+                <th>Difficulty</th>
+                <th>Duration</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+        {% for trek in past_assigned_treks %}
+
+            <tr>
+                <td>{{ trek.id }}</td>
+                <td>{{ trek.name }}</td>
+                <td>{{ trek.location }}</td>
+                <td>{{ trek.difficulty }}</td>
+                <td>{{ trek.duration }} Days</td>
+                <td>{{ trek.start_date }}</td>
+                <td>{{ trek.end_date }}</td>
+                <td>
+                    <span class="status-badge">
+                        {{ trek.status }}
+                    </span>
+                </td>
+            </tr>
+
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+{% else %}
+
+<div class="empty-card">
+    <h4>No Past Assigned Treks</h4>
+    <p>You don't have any completed or expired trek assignments.</p>
+</div>
+
+{% endif %}
+
+<div class="text-center mt-4">
+    <a href="{{ url_for('main.staff_dashboard') }}" class="btn back-btn">
+        ← Back to Dashboard
+    </a>
+</div>
+
+{% endblock %}
+
+{% block style %}
+
+<style>
+
+html,body{
+    min-height:100vh;
+    margin:0;
+    background:linear-gradient(135deg,#F5F9FF,#FFF8F2);
+    background-repeat:no-repeat;
+    background-size:cover;
+    background-attachment:fixed;
+}
+
+.page-title{
+    text-align:center;
+    margin-top:30px;
+    margin-bottom:35px;
+    color:#234E70;
+    font-size:36px;
+    font-weight:700;
+}
+
+.table-container{
+    background:#fff;
+    border-radius:18px;
+    padding:25px;
+    box-shadow:0 15px 35px rgba(0,0,0,.10);
+}
+
+.table{
+    margin-bottom:0;
+}
+
+.table thead{
+    background:#234E70;
+    color:white;
+}
+
+.table thead th{
+    padding:16px;
+    text-align:center;
+    vertical-align:middle;
+}
+
+.table tbody td{
+    text-align:center;
+    vertical-align:middle;
+    padding:15px;
+}
+
+.table tbody tr:hover{
+    background:#F5F9FF;
+}
+
+.status-badge{
+    background:#6c757d;
+    color:white;
+    padding:8px 16px;
+    border-radius:20px;
+    font-size:14px;
+    font-weight:600;
+}
+
+.empty-card{
+    max-width:700px;
+    margin:50px auto;
+    background:white;
+    padding:40px;
+    text-align:center;
+    border-radius:18px;
+    box-shadow:0 15px 35px rgba(0,0,0,.10);
+}
+
+.empty-card h4{
+    color:#234E70;
+    margin-bottom:15px;
+}
+
+.empty-card p{
+    color:#666;
+    margin-bottom:0;
+}
+
+.back-btn{
+    background:#234E70;
+    color:white;
+    padding:10px 28px;
+    border-radius:10px;
+    font-weight:600;
+    transition:.3s;
+}
+
+.back-btn:hover{
+    background:#163B57;
+    color:white;
+}
+
+</style>
+
+{% endblock %}

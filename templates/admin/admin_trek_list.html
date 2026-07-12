@@ -1,0 +1,161 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Admin Treks - TrailBliss
+{% endblock %}
+
+{% block content %}
+
+<h1>Created Treks</h1>
+
+<div class="heading">
+
+    <h2 class="text-muted">Manage Treks</h2>
+
+    <a class="btn btn-outline-transperent"
+       href="{{ url_for('main.create_trek') }}">
+        <i class="fas fa-plus fa-xs"></i>
+        Create Trek
+    </a>
+
+</div>
+
+<table class="table">
+
+    <thead>
+
+        <tr>
+            <th>Trek Name</th>
+            <th>Location</th>
+            <th>Difficulty</th>
+            <th>Duration</th>
+            <th>Slots</th>
+            <th>Staff</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>Bookings</th>
+            <th>Actions</th>
+        </tr>
+
+    </thead>
+
+    <tbody>
+
+    {% for trek in treks %}
+
+        <tr>
+
+            <td>{{ trek.trek_name }}</td>
+
+            <td>{{ trek.location }}</td>
+
+            <td>{{ trek.difficulty }}</td>
+
+            <td>{{ trek.duration }} Days</td>
+
+            <td>{{ trek.available_slots }}</td>
+
+            <td>{{ trek.staff.name }}</td>
+
+            <td>{{ trek.start_date.strftime('%d-%m-%Y') }}</td>
+
+            <td>{{ trek.end_date.strftime('%d-%m-%Y') }}</td>
+
+            <td>{{ trek.description }}</td>
+
+            <td>{{ trek.status }}</td>
+
+            <td>
+    
+                    {{ trek.booking|count }}
+                
+            </td>
+
+            <td>
+
+                <div class="d-flex gap-2">
+
+                    <a class="btn btn-outline-transperent"
+                       href="{{ url_for('main.edit_trek', id=trek.id) }}">
+                        ✏️ Edit
+                    </a>
+
+                    <form action="{{ url_for('main.close_trek', id=trek.id) }}"
+                          method="POST">
+
+                        <button class="btn btn-outline-transperent">
+                            🚫 Delete
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </td>
+
+        </tr>
+
+    {% else %}
+
+        <tr>
+
+            <td colspan="11" class="text-center">
+
+                No Treks Created Yet.
+
+            </td>
+
+        </tr>
+
+    {% endfor %}
+
+    </tbody>
+
+</table>
+
+{% endblock %}
+
+{% block style %}
+
+<style>
+
+html,
+body{
+    height:100%;
+    margin:0;
+    background:linear-gradient(135deg,#EAF2FF,#FFF1E6);
+    background-repeat:no-repeat;
+    background-attachment:fixed;
+    background-size:cover;
+}
+
+.heading{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+h1,h2{
+    text-align:center;
+}
+
+.table{
+    background:linear-gradient(135deg,#EAF2FF,#FFF1E6);
+}
+
+.table th,
+.table td{
+    text-align:center;
+    vertical-align:middle;
+}
+
+.table tbody tr:hover{
+    background:#eef5ff;
+}
+
+</style>
+
+{% endblock %}

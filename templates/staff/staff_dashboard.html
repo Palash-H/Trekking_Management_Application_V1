@@ -1,0 +1,108 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Staff Dashboard
+{% endblock %}
+
+{% block content %}
+
+<h2 class="welcome">
+    Welcome, {{ staff.name }} 👋
+</h2>
+
+<div class="dashboard-container">
+
+    <div class="stat">
+        <a href="{{ url_for('main.staff_assigned_treks') }}" class="stat-card">
+            <h3>{{ assigned_treks|length }}</h3>
+            <p>Assigned Treks</p>
+        </a>
+    </div>
+
+    <div class="stat">
+        <a href="{{ url_for('main.staff_registered_users') }}" class="stat-card">
+            
+            <p>Registered Trekkers</p>
+        </a>
+    </div>
+
+    <div class="stat">
+        <a href="{{ url_for('main.staff_past_assigned_treks') }}" class="stat-card">
+            <h3>{{ past_assigned_treks|length }}</h3>
+            <p>Past Assigned Treks</p>
+        </a>
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block style %}
+
+<style>
+
+html,body{
+    min-height:100vh;
+    margin:0;
+    background:linear-gradient(135deg,#F5F9FF,#FFF8F2);
+    background-repeat:no-repeat;
+    background-size:cover;
+    background-attachment:fixed;
+}
+
+.welcome{
+    color:#234E70;
+    margin-bottom:40px;
+    margin-top:30px;
+    text-align:center;
+    font-size:36px;
+    font-weight:700;
+}
+
+.dashboard-container{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:30px;
+    margin-top:30px;
+}
+
+.stat{
+    background:#fff;
+    padding:30px;
+    border-radius:18px;
+    box-shadow:0 15px 35px rgba(0,0,0,.10);
+    transition:.3s;
+}
+
+.stat:hover{
+    transform:translateY(-5px);
+    box-shadow:0 20px 40px rgba(0,0,0,.14);
+}
+
+.stat-card{
+    text-decoration:none;
+    color:#234E70;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    height:100%;
+}
+
+.stat-card h3{
+    font-size:46px;
+    font-weight:700;
+    margin-bottom:12px;
+}
+
+.stat-card p{
+    font-size:20px;
+    font-weight:600;
+    margin:0;
+    text-align:center;
+    color:#555;
+}
+
+</style>
+
+{% endblock %}

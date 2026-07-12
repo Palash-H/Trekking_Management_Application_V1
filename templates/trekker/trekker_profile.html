@@ -1,0 +1,154 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+My Profile
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-7">
+
+            <div class="card shadow-lg border-0 rounded-4">
+
+                <div class="card-body p-5">
+
+                    <h2 class="text-center text-success mb-4">
+                        My Profile
+                    </h2>
+
+                    <form method="POST">
+
+                        <div class="mb-3">
+                            <label class="form-label">
+                                Full Name
+                            </label>
+
+                            <input
+                                type="text"
+                                name="name"
+                                class="form-control"
+                                value="{{ trekker.name }}"
+                                required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">
+                                Email Address
+                            </label>
+
+                            <input
+                                type="email"
+                                name="email"
+                                class="form-control"
+                                value="{{ trekker.email }}"
+                                required>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">
+                                Phone Number
+                            </label>
+
+                            <input
+                                type="text"
+                                name="phone"
+                                class="form-control"
+                                value="{{ trekker.phone }}"
+                                required>
+                        </div>
+                        <hr class="my-4">
+
+                        <h4 class="mb-3">Change Password</h4>
+
+                        <div class="mb-3">
+                            <label class="form-label">Current Password</label>
+                            <input
+                                type="password"
+                                name="current_password"
+                                class="form-control">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">New Password</label>
+                            <input
+                                type="password"
+                                name="new_password"
+                                class="form-control">
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">Confirm New Password</label>
+                            <input
+                                type="password"
+                                name="confirm_password"
+                                class="form-control">
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center">
+
+                            <div>
+                                <a href="{{ url_for('main.trekker_dashboard') }}"
+                                   class="btn btn-outline-secondary">
+                                    ← Back
+                                </a>
+                        
+                                <a href="{{ url_for('main.logout') }}"
+                                   class="btn btn-outline-danger ms-2">
+                                    Logout
+                                </a>
+                            </div>
+                        
+                            <button
+                                type="submit"
+                                class="btn btn-success">
+                                Save Changes
+                            </button>
+                        
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block style %}
+
+<style>
+
+html,
+body{
+    min-height:100%;
+    background:linear-gradient(135deg,#EAF2FF,#FFF1E6);
+    background-attachment:fixed;
+}
+
+.card{
+    border-radius:20px;
+}
+
+.form-control{
+    border-radius:10px;
+    padding:12px;
+}
+
+.btn{
+    border-radius:10px;
+    padding:10px 20px;
+}
+
+</style>
+
+{% endblock %}

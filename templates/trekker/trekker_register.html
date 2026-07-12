@@ -1,0 +1,199 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Trekker Registration
+{% endblock %}
+
+{% block content %}
+
+<div class="register-container">
+
+    <div class="register-card">
+
+        <div class="register-icon">🥾</div>
+
+        <h1>Trekker Register</h1>
+
+        <p class="subtitle">
+            Create your account and start your next adventure.
+        </p>
+
+        <form method="POST">
+
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text"
+                       id="name"
+                       name="name"
+                       class="form-control"
+                       placeholder="Enter your full name"
+                       required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email"
+                       id="email"
+                       name="email"
+                       class="form-control"
+                       placeholder="Enter your email"
+                       required>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="text"
+                       id="phone"
+                       name="phone"
+                       class="form-control"
+                       placeholder="Enter your phone number"
+                       required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="passhash"
+                       id="passhash"
+                       name="passhash"
+                       class="form-control"
+                       placeholder="Create a password"
+                       required>
+            </div>
+
+            <button type="submit" class="register-btn">
+                Register
+            </button>
+
+        </form>
+
+        <div class="login-link">
+            Already have an account?
+            <a href="{{ url_for('main.trekker_login') }}">Login here</a>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block style %}
+<style>
+
+body{
+    background:linear-gradient(135deg,#F5F9FF,#FFF8F2);
+    min-height:100vh;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+.register-container{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:80px 20px;
+}
+
+.register-card{
+    width:450px;
+    background:#fff;
+    padding:40px;
+    border-radius:18px;
+    box-shadow:0 15px 35px rgba(0,0,0,.10);
+    transition:.3s;
+}
+
+.register-card:hover{
+    transform:translateY(-4px);
+}
+
+.register-icon{
+    width:85px;
+    height:85px;
+    margin:0 auto 20px;
+    border-radius:50%;
+    background:#EAF7EC;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-size:42px;
+}
+
+.register-card h1{
+    text-align:center;
+    color:#234E70;
+    margin-bottom:8px;
+    font-size:36px;
+}
+
+.subtitle{
+    text-align:center;
+    color:#777;
+    margin-bottom:30px;
+}
+
+.form-group{
+    margin-bottom:22px;
+}
+
+.form-group label{
+    display:block;
+    font-weight:600;
+    margin-bottom:8px;
+    color:#444;
+}
+
+.form-control{
+    width:100%;
+    padding:13px 15px;
+    border:1px solid #D9E2EC;
+    border-radius:10px;
+    font-size:16px;
+    transition:.3s;
+    box-sizing:border-box;
+}
+
+.form-control:focus{
+    outline:none;
+    border-color:#43A047;
+    box-shadow:0 0 0 3px rgba(67,160,71,.15);
+}
+
+.register-btn{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    background:#43A047;
+    color:#fff;
+    font-size:17px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.register-btn:hover{
+    background:#2E7D32;
+    transform:translateY(-2px);
+}
+
+.login-link{
+    text-align:center;
+    margin-top:22px;
+    color:#666;
+}
+
+.login-link a{
+    color:#43A047;
+    text-decoration:none;
+    font-weight:600;
+}
+
+.login-link a:hover{
+    text-decoration:underline;
+}
+
+
+</style>
+{% endblock %}

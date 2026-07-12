@@ -1,0 +1,182 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Assigned Treks
+{% endblock %}
+
+{% block content %}
+
+<h2 class="heading">
+    My Assigned Treks
+</h2>
+
+{% if treks %}
+
+<div class="trek-container">
+
+    {% for trek in treks %}
+
+    <div class="trek-card">
+
+        <h3>{{ trek.trek_name }}</h3>
+
+        <p><strong>Location:</strong> {{ trek.location }}</p>
+
+        <p><strong>Difficulty:</strong> {{ trek.difficulty }}</p>
+
+        <p><strong>Duration:</strong> {{ trek.duration }} Days</p>
+
+        <p><strong>Start Date:</strong> {{ trek.start_date }}</p>
+
+        <p><strong>End Date:</strong> {{ trek.end_date }}</p>
+
+        <p>
+            <strong>Status:</strong>
+            <span class="status">{{ trek.status }}</span>
+        </p>
+
+        <td>
+            <a href="{{ url_for('main.staff_trek_trekker', trek_id=trek.id) }}"
+               class="btn btn-info btn-sm">
+                {{ trek.booked_count }} Users
+            </a>
+        </td>
+
+        <hr>
+
+        <form action="{{ url_for('main.update_trek_slots', id=trek.id) }}"
+              method="POST"
+              class="mb-3">
+
+            <label class="form-label">
+                <strong>Available Slots</strong>
+            </label>
+
+            <input
+                type="number"
+                name="available_slots"
+                class="form-control"
+                min="0"
+                value="{{ trek.available_slots }}"
+                required>
+
+            <button class="btn btn-warning mt-2 w-100">
+                Update Slots
+            </button>
+
+        </form>
+
+        <form action="{{ url_for('main.update_trek_status', id=trek.id) }}"
+              method="POST">
+
+            <label class="form-label">
+                <strong>Change Status</strong>
+            </label>
+
+            <select name="status"
+                    class="form-select">
+
+                <option value="Pending"
+                    {% if trek.status=="Pending" %}selected{% endif %}>
+                    Pending
+                </option>
+
+                <option value="Started"
+                    {% if trek.status=="Started" %}selected{% endif %}>
+                    Started
+                </option>
+
+                <option value="Completed"
+                    {% if trek.status=="Completed" %}selected{% endif %}>
+                    Completed
+                </option>
+
+            </select>
+
+            <button class="btn btn-success mt-2 w-100">
+                Update Status
+            </button>
+
+        </form>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% else %}
+
+<div class="empty-card">
+    <h4>No Treks Assigned Yet</h4>
+</div>
+
+{% endif %}
+
+{% endblock %}
+
+{% block style %}
+
+<style>
+
+html,body{
+    min-height:100vh;
+    margin:0;
+    background:linear-gradient(135deg,#F5F9FF,#FFF8F2);
+}
+
+.heading{
+    text-align:center;
+    margin:35px 0;
+    color:#234E70;
+    font-size:36px;
+    font-weight:700;
+}
+
+.trek-container{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(330px,1fr));
+    gap:25px;
+}
+
+.trek-card{
+    background:#fff;
+    border-radius:18px;
+    padding:25px;
+    box-shadow:0 15px 35px rgba(0,0,0,.10);
+    transition:.3s;
+}
+
+.trek-card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 20px 40px rgba(0,0,0,.14);
+}
+
+.trek-card h3{
+    color:#234E70;
+    margin-bottom:18px;
+}
+
+.trek-card p{
+    margin:8px 0;
+    color:#555;
+}
+
+.status{
+    color:#198754;
+    font-weight:600;
+}
+
+.empty-card{
+    max-width:500px;
+    margin:60px auto;
+    background:#fff;
+    padding:40px;
+    border-radius:18px;
+    text-align:center;
+    box-shadow:0 15px 35px rgba(0,0,0,.1);
+}
+
+</style>
+
+{% endblock %}

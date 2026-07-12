@@ -1,0 +1,134 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Admin Search
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <h1 class="mb-4">Search Results for "{{ query }}"</h1>
+
+    <!-- Trekkers -->
+    <h3 class="mt-4">Trekkers</h3>
+
+    {% if trekkers %}
+
+    <table class="table table-bordered table-hover">
+        <thead class="table-light">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+        {% for trekker in trekkers %}
+            <tr>
+                <td>{{ trekker.id }}</td>
+                <td>{{ trekker.name }}</td>
+                <td>{{ trekker.email }}</td>
+                <td>{{ trekker.phone }}</td>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+
+    {% else %}
+
+    <div class="alert alert-warning">
+        No trekkers found.
+    </div>
+
+    {% endif %}
+
+
+    <!-- Staff -->
+    <h3 class="mt-5">Staff</h3>
+
+    {% if staffs %}
+
+    <table class="table table-bordered table-hover">
+        <thead class="table-light">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Contact</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+        {% for staff in staffs %}
+            <tr>
+                <td>{{ staff.id }}</td>
+                <td>{{ staff.name }}</td>
+                <td>{{ staff.email }}</td>
+                <td>{{ staff.contact }}</td>
+                <td>{{ staff.status }}</td>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+
+    {% else %}
+
+    <div class="alert alert-warning">
+        No staff found.
+    </div>
+
+    {% endif %}
+
+
+    <!-- Treks -->
+    <h3 class="mt-5">Treks</h3>
+
+    {% if treks %}
+
+    <table class="table table-bordered table-hover">
+        <thead class="table-light">
+            <tr>
+                <th>ID</th>
+                <th>Trek Name</th>
+                <th>Location</th>
+                <th>Difficulty</th>
+                <th>Duration</th>
+                <th>Available Slots</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+        {% for trek in treks %}
+            <tr>
+                <td>{{ trek.id }}</td>
+                <td>{{ trek.trek_name }}</td>
+                <td>{{ trek.location }}</td>
+                <td>{{ trek.difficulty }}</td>
+                <td>{{ trek.duration }}</td>
+                <td>{{ trek.available_slots }}</td>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+
+    {% else %}
+
+    <div class="alert alert-warning">
+        No treks found.
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

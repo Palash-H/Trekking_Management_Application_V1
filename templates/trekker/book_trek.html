@@ -1,0 +1,76 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Book Trek
+{% endblock %}
+
+{% block content %}
+
+<div class="form-div">
+
+    <h1>Book Trek</h1>
+
+    <form method="POST" class="mt-5 form-login">
+
+        <label class="form-label mb-2">Trekker Name</label>
+        <input type="text"
+               class="form-control mb-3"
+               value="{{ trekker.name }}"
+               disabled>
+
+        <label class="form-label mb-2">Email</label>
+        <input type="text"
+               class="form-control mb-3"
+               value="{{ trekker.email }}"
+               disabled>
+
+        <label class="form-label mb-2">Trek Name</label>
+        <input type="text"
+               class="form-control mb-3"
+               value="{{ trek.trek_name }}"
+               disabled>
+
+        <label class="form-label mb-2">Location</label>
+        <input type="text"
+               class="form-control mb-3"
+               value="{{ trek.location }}"
+               disabled>
+
+        <label class="form-label mb-2">Difficulty</label>
+        <input type="text"
+               class="form-control mb-3"
+               value="{{ trek.difficulty }}"
+               disabled>
+
+        <label class="form-label mb-2">Duration</label>
+        <input type="text"
+               class="form-control mb-3"
+               value="{{ trek.duration }} Days"
+               disabled>
+
+        <label class="form-label mb-2">Start Date</label>
+        <input type="text"
+               class="form-control mb-3"
+               value="{{ trek.start_date }}"
+               disabled>
+
+        <label class="form-label mb-4">End Date</label>
+        <input type="text"
+               class="form-control mb-4"
+               value="{{ trek.end_date }}"
+               disabled>
+
+        <button class="btn btn-success btn-login">
+            Confirm Booking
+        </button>
+
+        <a href="{{ url_for('main.available_treks') }}"
+           class="btn btn-outline-secondary mt-3">
+            Cancel
+        </a>
+
+    </form>
+
+</div>
+
+{% endblock %}

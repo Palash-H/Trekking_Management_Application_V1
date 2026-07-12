@@ -1,0 +1,134 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Trek History
+{% endblock %}
+
+{% block content %}
+
+<h1 class="wel">Trek History</h1>
+
+<div class="heading">
+    <h2 class="text-muted">Completed Treks</h2>
+</div>
+
+{% if history %}
+
+<table class="table">
+
+    <thead>
+        <tr>
+            <th>Trek Name</th>
+            <th>Location</th>
+            <th>Difficulty</th>
+            <th>Duration</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Booked On</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+    {% for booking in history %}
+
+        <tr>
+
+            <td>{{ booking.trek.trek_name }}</td>
+
+            <td>{{ booking.trek.location }}</td>
+
+            <td>{{ booking.trek.difficulty }}</td>
+
+            <td>{{ booking.trek.duration }} Days</td>
+
+            <td>{{ booking.trek.start_date }}</td>
+
+            <td>{{ booking.trek.end_date }}</td>
+
+            <td>{{ booking.booking_slot.strftime('%d-%m-%Y') }}</td>
+
+            <td>
+                <span class="badge bg-success">
+                    {% if booking.status == "Completed" %}
+                        {{ booking.status }}
+                    {% else %}
+                        Completed
+                    {% endif %}
+                </span>
+            </td>
+
+        </tr>
+
+    {% endfor %}
+
+    </tbody>
+
+</table>
+
+{% else %}
+
+<div class="alert alert-info text-center mt-4">
+    You haven't completed any treks yet.
+</div>
+
+{% endif %}
+
+{% endblock %}
+
+{% block style %}
+
+<style>
+
+html,
+body{
+    height:100%;
+    margin:0;
+    background:linear-gradient(135deg,#EAF2FF,#FFF1E6);
+    background-repeat:no-repeat;
+    background-attachment:fixed;
+    background-size:cover;
+}
+
+.wel{
+    margin-top:30px;
+    text-align:center;
+    color:#2E5E3B;
+}
+
+.heading{
+    display:flex;
+    justify-content:center;
+    margin-bottom:20px;
+}
+
+.table{
+    background:white;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+}
+
+th{
+    background:#2E5E3B;
+    color:white;
+}
+
+td{
+    vertical-align:middle;
+}
+
+.badge{
+    font-size:0.9rem;
+    padding:8px 12px;
+}
+
+.alert{
+    max-width:700px;
+    margin:30px auto;
+}
+
+</style>
+
+{% endblock %}

@@ -1,0 +1,135 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Available Treks
+{% endblock %}
+
+{% block content %}
+
+<h1 class="page-title">Available Treks</h1>
+
+<div class="trek-container">
+
+    {% for trek in treks %}
+
+    <div class="trek-card">
+
+        <div class="trek-header">
+            <h3>{{ trek.trek_name }}</h3>
+            <span class="badge">{{ trek.difficulty }}</span>
+        </div>
+
+        <p><strong>📍 Location:</strong> {{ trek.location }}</p>
+
+        <p><strong>🧑 Guide:</strong>
+            {% if trek.staff %}
+                {{ trek.staff.name }}
+            {% else %}
+                Not Assigned
+            {% endif %}
+        </p>
+
+        <p><strong>⛰ Duration:</strong> {{ trek.duration }} Days</p>
+
+        <p><strong>👥 Slots:</strong> {{ trek.available_slots }}</p>
+
+        <p><strong>📅 Start:</strong> {{ trek.start_date }}</p>
+
+        <p><strong>🏁 End:</strong> {{ trek.end_date }}</p>
+
+        <p><strong>📝 Description</strong></p>
+
+        <p class="description">
+            {{ trek.description }}
+        </p>
+
+    </div>
+
+    {% else %}
+
+    <h4 class="text-center text-muted">
+        No treks available.
+    </h4>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}
+
+{% block style %}
+
+<style>
+
+html,body{
+    min-height:100vh;
+    margin:0;
+    background:linear-gradient(135deg,#F5F9FF,#FFF8F2);
+    background-attachment:fixed;
+}
+
+.page-title{
+    text-align:center;
+    color:#234E70;
+    font-weight:700;
+    margin:30px 0;
+}
+
+.trek-container{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(340px,1fr));
+    gap:30px;
+}
+
+.trek-card{
+    background:#fff;
+    border-radius:18px;
+    padding:25px;
+    box-shadow:0 15px 35px rgba(0,0,0,.10);
+    transition:.3s;
+}
+
+.trek-card:hover{
+    transform:translateY(-6px);
+}
+
+.trek-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.trek-header h3{
+    color:#234E70;
+    margin:0;
+}
+
+.badge{
+    background:#4F8EF7;
+    color:white;
+    padding:8px 15px;
+    border-radius:20px;
+    font-size:14px;
+}
+
+.description{
+    color:#666;
+    text-align:justify;
+    min-height:80px;
+}
+
+.card-buttons{
+    margin-top:20px;
+    display:flex;
+    gap:10px;
+}
+
+.btn{
+    flex:1;
+    border-radius:10px;
+}
+
+</style>
+
+{% endblock %}

@@ -1,0 +1,115 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Staff Profile
+{% endblock %}
+
+{% block content %}
+
+<h2 class="heading">My Profile</h2>
+
+<div class="profile-card">
+
+    <form method="POST">
+
+        <div class="mb-3">
+            <label>Name</label>
+            <input type="text"
+                   name="name"
+                   class="form-control"
+                   value="{{ staff.name }}"
+                   required>
+        </div>
+
+        <div class="mb-3">
+            <label>Email</label>
+            <input type="email"
+                   name="email"
+                   class="form-control"
+                   value="{{ staff.email }}"
+                   required>
+        </div>
+
+        <div class="mb-3">
+            <label>Contact</label>
+            <input type="text"
+                   name="contact"
+                   class="form-control"
+                   value="{{ staff.contact }}"
+                   required>
+        </div>
+
+        <div class="mb-3">
+            <label>Approval Status</label>
+            <input type="text"
+                   class="form-control"
+                   value="{{ staff.approval_status }}"
+                   readonly>
+        </div>
+
+        <div class="mb-4">
+            <label>New Password</label>
+            <input type="password"
+                   name="password"
+                   class="form-control"
+                   placeholder="Leave blank to keep current password">
+        </div>
+
+        <div class="buttons">
+            <button type="submit" class="btn btn-primary">
+                Update Profile
+            </button>
+
+            <a href="{{ url_for('main.logout') }}"
+               class="btn btn-danger">
+                Logout
+            </a>
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}
+
+{% block style %}
+
+<style>
+
+html,body{
+    min-height:100vh;
+    margin:0;
+    background:linear-gradient(135deg,#F5F9FF,#FFF8F2);
+}
+
+.heading{
+    text-align:center;
+    margin:35px 0;
+    color:#234E70;
+    font-weight:700;
+}
+
+.profile-card{
+    max-width:650px;
+    margin:auto;
+    background:white;
+    padding:35px;
+    border-radius:18px;
+    box-shadow:0 15px 35px rgba(0,0,0,.1);
+}
+
+label{
+    font-weight:600;
+    color:#234E70;
+    margin-bottom:6px;
+}
+
+.buttons{
+    display:flex;
+    justify-content:space-between;
+    margin-top:25px;
+}
+
+</style>
+
+{% endblock %}

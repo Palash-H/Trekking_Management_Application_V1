@@ -1,0 +1,199 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Create Trek
+{% endblock %}
+
+{% block content %}
+
+<div class="form-container">
+
+    <div class="form-card">
+
+        <div class="form-icon">
+            🥾
+        </div>
+
+        <h1>Create Trek</h1>
+
+        <p class="subtitle">
+            Add a new trek to TrailBliss
+        </p>
+
+        <form method="POST" action="{{ url_for('main.create_trek_post') }}">
+
+            <div class="form-group">
+                <label>Trek Name</label>
+                <input type="text" name="trek_name" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label>Location</label>
+                <input type="text" name="location" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label>Difficulty</label>
+                <select name="difficulty" class="form-control" required>
+                    <option value="">Select Difficulty</option>
+                    <option value="Easy">Easy</option>
+                    <option value="Moderate">Moderate</option>
+                    <option value="Hard">Hard</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Duration (Days)</label>
+                <input type="number" name="duration" class="form-control" min="1" required>
+            </div>
+
+            <div class="form-group">
+                <label>Available Slots</label>
+                <input type="number" name="available_slots" class="form-control" min="1" required>
+            </div>
+
+            <div class="form-group">
+                <label>Assign Staff</label>
+                <select name="staff_id" class="form-control" required>
+                    <option value="">Select Staff</option>
+
+                    {% for staff in staffs %}
+                        <option value="{{ staff.id }}">
+                            {{ staff.name }}
+                        </option>
+                    {% endfor %}
+
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Start Date</label>
+                <input type="date" name="start_date" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label>End Date</label>
+                <input type="date" name="end_date" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label>Description</label>
+                <textarea name="description" rows="4" class="form-control"></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn">
+                Create Trek
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block style %}
+
+<style>
+
+body{
+    background:linear-gradient(135deg,#F5F9FF,#FFF8F2);
+    min-height:100vh;
+}
+
+.form-container{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:60px 20px;
+}
+
+.form-card{
+    width:550px;
+    background:#fff;
+    padding:40px;
+    border-radius:18px;
+    box-shadow:0 15px 35px rgba(0,0,0,.10);
+    transition:.3s;
+}
+
+.form-card:hover{
+    transform:translateY(-4px);
+}
+
+.form-icon{
+    width:85px;
+    height:85px;
+    margin:0 auto 20px;
+    border-radius:50%;
+    background:#FFF3E8;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:40px;
+}
+
+.form-card h1{
+    text-align:center;
+    color:#234E70;
+    margin-bottom:8px;
+}
+
+.subtitle{
+    text-align:center;
+    color:#777;
+    margin-bottom:30px;
+}
+
+.form-group{
+    margin-bottom:20px;
+}
+
+.form-group label{
+    display:block;
+    margin-bottom:8px;
+    font-weight:600;
+    color:#444;
+}
+
+.form-control{
+    width:100%;
+    padding:13px 15px;
+    border:1px solid #D9E2EC;
+    border-radius:10px;
+    font-size:16px;
+    box-sizing:border-box;
+}
+
+.form-control:focus{
+    outline:none;
+    border-color:#4F8EF7;
+    box-shadow:0 0 0 3px rgba(79,142,247,.15);
+}
+
+textarea.form-control{
+    resize:vertical;
+}
+
+.submit-btn{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    background:#4F8EF7;
+    color:#fff;
+    font-size:17px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.submit-btn:hover{
+    background:#356AC3;
+    transform:translateY(-2px);
+}
+
+</style>
+
+{% endblock %}
