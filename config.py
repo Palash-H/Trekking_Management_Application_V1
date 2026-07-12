@@ -1,0 +1,3 @@
+SQLALCHEMY_DATABASE_URI = "sqlite:///trek.db"
+SQLALCHEMY_TRACK_MODIFICATION = False
+SECRET_KEY = 'myrecentapp'
