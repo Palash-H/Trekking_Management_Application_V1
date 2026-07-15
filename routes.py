@@ -13,6 +13,34 @@ main_bp = Blueprint('main',__name__)
 def index():
     return render_template('index.html')
 
+def admin_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'admin_id' not in session:
+            flash("Please login as Admin.", "warning")
+            return redirect(url_for('main.admin_login'))
+        return f(*args, **kwargs)
+    return decorated_function
+
+
+def staff_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'staff_id' not in session:
+            flash("Please login as Staff.", "warning")
+            return redirect(url_for('main.staff_login'))
+        return f(*args, **kwargs)
+    return decorated_function
+
+
+def trekker_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'trekker_id' not in session:
+            flash("Please login as Trekker.", "warning")
+            return redirect(url_for('main.trekker_login'))
+        return f(*args, **kwargs)
+    return decorated_function
 
 # admin routes
 
@@ -28,10 +56,12 @@ def admin_login_post():
     admin = Admin.query.filter_by(email=email).first()
 
     if admin is None:
-        return "Invalid email"
+        flash('Invalid email')
+        return redirect(url_for('main.admin_login_post'))
 
     if admin.passhash != password:
-        return "Invalid password"
+        flash('Invalid Password')
+        return redirect(url_for('main.admin_login_post'))
 
 
     session.clear()
@@ -40,6 +70,7 @@ def admin_login_post():
     return redirect(url_for('main.admin_dashboard'))
 
 @main_bp.route('/admin_dashboard')
+@admin_required
 def admin_dashboard():
     total_treks = Trek.query.count()
     total_trekker = Trekker.query.count()
@@ -50,6 +81,7 @@ def admin_dashboard():
 
 
 @main_bp.route('/admin_staff_list')
+@admin_required
 def admin_staff_list():
     if 'admin_id' not in session:
         return redirect(url_for('main.admin_login'))
@@ -57,6 +89,7 @@ def admin_staff_list():
     return render_template('admin/admin_staff_list.html',staffs=staffs)
 
 @main_bp.route('/admin/staff/<int:id>/approve')
+@admin_required
 def approve_staff(id):
     staff = Staff.query.get_or_404(id)
     staff.approval_status = 'Approved'
@@ -64,6 +97,7 @@ def approve_staff(id):
     return redirect(url_for('main.admin_staff_list'))
 
 @main_bp.route('/admin/staff/<int:id>/blacklist')
+@admin_required
 def blacklist_staff(id):
     staff = Staff.query.get_or_404(id)
     staff.approval_status = 'Blacklist'
@@ -71,6 +105,7 @@ def blacklist_staff(id):
     return redirect(url_for('main.admin_staff_list'))
 
 @main_bp.route('/admin/staff/<int:id>/reject')
+@admin_required
 def reject_staff(id):
     staff = Staff.query.get_or_404(id)
     staff.approval_status = 'Rejected'
@@ -79,6 +114,7 @@ def reject_staff(id):
 
 
 @main_bp.route('/admin_trek_list')
+@admin_required
 def admin_trek_list():
     if 'admin_id' not in session:
         return redirect(url_for('main.admin_login'))
@@ -91,6 +127,7 @@ def admin_trek_list():
     )
 
 @main_bp.route('/admin/edit_trek/<int:id>')
+@admin_required
 def edit_trek(id):
     if 'admin_id' not in session:
         return redirect(url_for('main.admin_login'))
@@ -106,6 +143,7 @@ def edit_trek(id):
 
 
 @main_bp.route('/admin/edit_trek/<int:id>', methods=['POST'])
+@admin_required
 def edit_trek_post(id):
     if 'admin_id' not in session:
         return redirect(url_for('main.admin_login'))
@@ -132,6 +170,7 @@ def edit_trek_post(id):
     return redirect(url_for('main.admin_trek_list'))
 
 @main_bp.route('/admin/close_trek/<int:id>',methods=['POST'])
+@admin_required
 def close_trek(id):
     if 'admin_id' not in session:
         return redirect(url_for('main.admin_login'))
@@ -151,6 +190,7 @@ def close_trek(id):
     
 
 @main_bp.route('/admin_trekker_list')
+@admin_required
 def admin_trekker_list():
 
     if 'admin_id' not in session:
@@ -164,6 +204,7 @@ def admin_trekker_list():
     )
 
 @main_bp.route('/admin/trekker/<int:id>/blacklist')
+@admin_required
 def blacklist_trekker(id):
 
     if 'admin_id' not in session:
@@ -180,6 +221,7 @@ def blacklist_trekker(id):
     return redirect(url_for('main.admin_trekker_list'))
 
 @main_bp.route('/admin/trekker/<int:id>/activate')
+@admin_required
 def activate_trekker(id):
 
     if 'admin_id' not in session:
@@ -197,6 +239,7 @@ def activate_trekker(id):
 
 
 @main_bp.route('/admin_booking_list')
+@admin_required
 def admin_booking_list():
 
     if 'admin_id' not in session:
@@ -210,6 +253,7 @@ def admin_booking_list():
     )
 
 @main_bp.route('/admin_profile')
+@admin_required
 def admin_profile():
     if 'admin_id' not in session:
         return redirect(url_for('main.admin_login'))
@@ -222,6 +266,7 @@ def admin_profile():
     )
    
 @main_bp.route('/admin_profile',methods=["POST"])
+@admin_required
 def admin_profile_post():
     admin = Admin.query.get(session['admin_id'])
     email = request.form.get('email')
@@ -239,6 +284,7 @@ def admin_profile_post():
     return redirect(url_for('main.admin_profile'))
 
 @main_bp.route('/admin/create_trek')
+@admin_required
 def create_trek():
 
     staffs = Staff.query.filter_by(approval_status="Approved").all()
@@ -249,6 +295,7 @@ def create_trek():
     )  
 
 @main_bp.route('/admin/create_trek', methods=['POST'])
+@admin_required
 def create_trek_post():
 
     trek = Trek(
@@ -279,6 +326,7 @@ def create_trek_post():
 
 
 @main_bp.route('/admin/search')
+@admin_required
 def admin_search():
 
     if 'admin_id' not in session:
@@ -384,9 +432,9 @@ def staff_register_post():
     return render_template('/staff/staff_login.html')
 
 
-from datetime import date
 
 @main_bp.route('/staff/staff_dashboard')
+@staff_required
 def staff_dashboard():
     if 'staff_id' not in session:
         return redirect(url_for('main.staff_login'))
@@ -421,10 +469,8 @@ def staff_dashboard():
     )
 
 
-
-from datetime import date
-
 @main_bp.route('/staff_assigned_treks')
+@staff_required
 def staff_assigned_treks():
     if 'staff_id' not in session:
         return redirect(url_for('main.staff_login'))
@@ -434,14 +480,14 @@ def staff_assigned_treks():
 
     treks = Trek.query.filter(
         Trek.staff_id == staff.id,
-        Trek.status != "Completed",
+        Trek.status.notin_(["Completed", "Closed"]),
         Trek.end_date >= today
     ).all()
 
     for trek in treks:
         trek.booked_count = Booking.query.filter_by(
             trek_id=trek.id,
-            status="Booked"
+            status="Booked",
         ).count()
 
     return render_template(
@@ -451,6 +497,7 @@ def staff_assigned_treks():
     )
 
 @main_bp.route('/staff/past_assigned_treks')
+@staff_required
 def staff_past_assigned_treks():
     if 'staff_id' not in session:
         return redirect(url_for('main.staff_login'))
@@ -472,6 +519,7 @@ def staff_past_assigned_treks():
     )
 
 @main_bp.route('/staff_registered_users')
+@staff_required
 def staff_registered_users():
 
     if 'staff_id' not in session:
@@ -491,6 +539,7 @@ def staff_registered_users():
     )
 
 @main_bp.route('/staff_trek_trekker/<int:trek_id>')
+@staff_required
 def staff_trek_trekker(trek_id):
 
     if 'staff_id' not in session:
@@ -515,6 +564,7 @@ def staff_trek_trekker(trek_id):
     )
 
 @main_bp.route('/staff/remove_booking/<int:booking_id>')
+@staff_required
 def staff_remove_booking(booking_id):
 
     if 'staff_id' not in session:
@@ -541,6 +591,7 @@ def staff_remove_booking(booking_id):
     ))
 
 @main_bp.route('/staff/profile')
+@staff_required
 def staff_profile():
     if 'staff_id' not in session:
         return redirect(url_for('main.staff_login'))
@@ -553,6 +604,7 @@ def staff_profile():
     )
 
 @main_bp.route('/staff/profile', methods=['POST'])
+@staff_required
 def staff_profile_post():
     if 'staff_id' not in session:
         return redirect(url_for('main.staff_login'))
@@ -575,6 +627,7 @@ def staff_profile_post():
     return redirect(url_for('main.staff_profile'))
 
 @main_bp.route('/staff/trek/<int:id>/update_slots', methods=['POST'])
+@staff_required
 def update_trek_slots(id):
 
     if 'staff_id' not in session:
@@ -591,6 +644,7 @@ def update_trek_slots(id):
     return redirect(url_for('main.staff_assigned_treks'))
 
 @main_bp.route('/staff/trek/<int:id>/update_status', methods=['POST'])
+@staff_required
 def update_trek_status(id):
 
     if 'staff_id' not in session:
@@ -675,9 +729,8 @@ def trekker_register_post():
     flash('Registerd successfully..')
     return redirect(url_for('main.trekker_login'))
 
-from datetime import date
-
 @main_bp.route('/trekker_dashboard')
+@trekker_required
 def trekker_dashboard():
 
     if 'trekker_id' not in session:
@@ -716,6 +769,7 @@ def trekker_dashboard():
     )
 
 @main_bp.route('/trekker/available_treks')
+@trekker_required
 def available_treks():
 
     if 'trekker_id' not in session:
@@ -743,6 +797,7 @@ def available_treks():
     )
 
 @main_bp.route('/trekker/my_bookings')
+@trekker_required
 def my_bookings():
 
     if 'trekker_id' not in session:
@@ -764,6 +819,7 @@ def my_bookings():
     )
 
 @main_bp.route('/trekker/trek_history')
+@trekker_required
 def trek_history():
 
     if 'trekker_id' not in session:
@@ -786,6 +842,7 @@ def trek_history():
     )
 
 @main_bp.route('/trekker/book_trek/<int:id>')
+@trekker_required
 def book_trek(id):
 
     if 'trekker_id' not in session:
@@ -800,6 +857,7 @@ def book_trek(id):
         trek=trek
     )
 @main_bp.route('/trekker/book_trek/<int:id>', methods=['POST'])
+@trekker_required
 def book_trek_post(id):
 
     if 'trekker_id' not in session:
@@ -808,17 +866,16 @@ def book_trek_post(id):
     trekker = Trekker.query.get_or_404(session['trekker_id'])
     trek = Trek.query.get_or_404(id)
 
-    # Trek must be open for booking
+  
     if trek.status != "Open":
         flash("This trek is not open for booking.", "warning")
         return redirect(url_for('main.available_treks'))
 
-    # Check if slots are available
     if trek.available_slots <= 0:
         flash("No slots available for this trek.", "danger")
         return redirect(url_for('main.available_treks'))
 
-    # Prevent duplicate booking
+
     booking = Booking.query.filter_by(
         trekker_id=trekker.id,
         trek_id=trek.id
@@ -828,7 +885,6 @@ def book_trek_post(id):
         flash("You have already booked this trek.", "warning")
         return redirect(url_for('main.available_treks'))
 
-    # Create booking
     booking = Booking(
         trekker_id=trekker.id,
         trek_id=trek.id,
@@ -837,7 +893,7 @@ def book_trek_post(id):
 
     db.session.add(booking)
 
-    # Reduce available slots
+
     trek.available_slots -= 1
 
     db.session.commit()
@@ -847,6 +903,7 @@ def book_trek_post(id):
 
 
 @main_bp.route('/trekker/trekker_profile')
+@trekker_required
 def trekker_profile():
 
     if 'trekker_id' not in session:
@@ -859,6 +916,7 @@ def trekker_profile():
         trekker=trekker
     )
 @main_bp.route('/trekker/trekker_profile', methods=['POST'])
+@trekker_required
 def trekker_profile_post():
 
     if 'trekker_id' not in session:
@@ -910,6 +968,7 @@ def trekker_profile_post():
     return redirect(url_for('main.trekker_profile'))
 
 @main_bp.route('/trekker/search')
+@trekker_required
 def trekker_search():
 
     if 'trekker_id' not in session:

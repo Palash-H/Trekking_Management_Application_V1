@@ -9,13 +9,13 @@ import config
 import models
 app.config.from_object(config)
 
-# migrate = Migrate()
+migrate = Migrate()
 db.init_app(app)
-# migrate.init_app(app,db)
+migrate.init_app(app,db)
 from routes import main_bp
 app.register_blueprint(main_bp)
 with app.app_context():
-    db.create_all()
+    # db.create_all()
 
     admin = models.Admin.query.filter_by(email='admin@gmail.com').first()
 
